@@ -6,11 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.phuocdai.mariobros.Screens.PlayScreen;
-import com.phuocdai.mariobros.Screens.SplashScreen;
 
 public class MarioBros extends Game {
 	//Virtual Screen size and Box2D Scale(Pixels Per Meter)
@@ -57,9 +53,12 @@ public class MarioBros extends Game {
 		manager.load("gui/options_click.png", Texture.class);
 		manager.load("gui/play_click.png", Texture.class);
 		manager.load("gui/exit_click.png", Texture.class);
+		manager.load("playscreen/up.png", Texture.class);
+		manager.load("playscreen/left.png", Texture.class);
+		manager.load("playscreen/right.png", Texture.class);
 		manager.finishLoading();
 
-		setScreen(new SplashScreen(this));
+		setScreen(new PlayScreen(this));
 	}
 
 

@@ -1,5 +1,6 @@
 package com.phuocdai.mariobros.Screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -26,7 +27,6 @@ import com.phuocdai.mariobros.Sprites.Mario;
 import com.phuocdai.mariobros.Tools.B2WorldCreator;
 import com.phuocdai.mariobros.Tools.WorldContactListener;
 
-import java.util.PriorityQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -59,6 +59,7 @@ public class PlayScreen implements Screen {
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
+    Controller controller;
 
     public PlayScreen(MarioBros game){
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
@@ -100,6 +101,8 @@ public class PlayScreen implements Screen {
 
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
+
+        controller = new Controller(game);
     }
 
     public void spawnItem(ItemDef idef){
@@ -130,12 +133,22 @@ public class PlayScreen implements Screen {
     public void handleInput(float dt){
         //control our player using immediate impulses
         if(player.currentState != Mario.State.DEAD) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
-                player.jump();
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
-                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
-                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+            if (Gdx.app.getType() == Application.ApplicationType.Android) {
+                if (controller.isUpPressed())
+                    player.jump();
+                if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2)
+                    player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+                if (controller.isLeftPressed() && player.b2body.getLinearVelocity().x >= -2)
+                    player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+            }
+            else {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.W))
+                    player.jump();
+                if (Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2)
+                    player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+                if (Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
+                    player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+            }
         }
 
     }
@@ -146,7 +159,7 @@ public class PlayScreen implements Screen {
         handleSpawningItems();
 
         //takes 1 step in the physics simulation(60 times per second)
-        world.step(1 / 60f, 6, 2);
+        world.step(1 / 60f, 6, 4);
 
         player.update(dt);
         for(Enemy enemy : creator.getEnemies()) {
@@ -206,7 +219,8 @@ public class PlayScreen implements Screen {
             game.setScreen(new GameOverScreen(game));
             dispose();
         }
-
+        if(Gdx.app.getType() == Application.ApplicationType.Android)
+            controller.draw();
     }
 
     public boolean gameOver(){
@@ -220,7 +234,7 @@ public class PlayScreen implements Screen {
     public void resize(int width, int height) {
         //updated our game viewport
         gamePort.update(width,height);
-
+        controller.resize(width,height);
     }
 
     public TiledMap getMap(){
