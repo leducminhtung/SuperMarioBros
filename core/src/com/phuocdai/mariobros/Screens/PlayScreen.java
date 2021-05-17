@@ -253,7 +253,7 @@ public class PlayScreen implements Screen{
     }
 
     public boolean gameFinish(){
-        if(player.currentState == Mario.State.FINISH && player.getStateTimer() >3){
+        if(player.isFinished() && player.getStateTimer() >3){
             return true;
         }
         return false;
