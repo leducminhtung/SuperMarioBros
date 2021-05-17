@@ -8,7 +8,8 @@ import com.phuocdai.mariobros.MarioBros;
 import com.phuocdai.mariobros.Screens.PlayScreen;
 import com.phuocdai.mariobros.Sprites.Mario;
 
-public class Mushroom extends Item{
+
+public class Mushroom extends Item {
     public Mushroom(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         setRegion(screen.getAtlas().findRegion("mushroom"), 0, 0, 16, 16);

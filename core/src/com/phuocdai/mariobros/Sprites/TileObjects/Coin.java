@@ -1,10 +1,8 @@
 package com.phuocdai.mariobros.Sprites.TileObjects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.phuocdai.mariobros.MarioBros;
 import com.phuocdai.mariobros.Scenes.Hud;
@@ -12,6 +10,7 @@ import com.phuocdai.mariobros.Screens.PlayScreen;
 import com.phuocdai.mariobros.Sprites.Items.ItemDef;
 import com.phuocdai.mariobros.Sprites.Items.Mushroom;
 import com.phuocdai.mariobros.Sprites.Mario;
+
 
 public class Coin extends InteractiveTileObject {
     private static TiledMapTileSet tileSet;
@@ -22,6 +21,11 @@ public class Coin extends InteractiveTileObject {
         tileSet = map.getTileSets().getTileSet("tileset_gutter");
         fixture.setUserData(this);
         setCategoryFilter(MarioBros.COIN_BIT);
+    }
+
+    @Override
+    public void marioTouchMileStones(Mario mario) {
+
     }
 
     @Override

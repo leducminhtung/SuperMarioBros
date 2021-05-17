@@ -11,18 +11,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.phuocdai.mariobros.MarioBros;
+import com.phuocdai.mariobros.Sprites.Mario;
 
 public class Controller {
-    private Viewport viewport;
-    private Stage stage;
-    private boolean upPressed, leftPressed, rightPressed;
-    private OrthographicCamera camera;
+    Viewport viewport;
+    Stage stage;
+    boolean upPressed, leftPressed, rightPressed, downPressed;
+    OrthographicCamera cam;
     private MarioBros game;
 
-    public Controller(MarioBros game) {
+    public Controller(MarioBros game){
         this.game = game;
-        camera = new OrthographicCamera();
-        viewport = new FitViewport(MarioBros.V_WIDTH, MarioBros.V_HEIGHT,camera);
+        cam = new OrthographicCamera();
+        viewport = new FitViewport(MarioBros.V_WIDTH, MarioBros.V_HEIGHT,cam);
         stage = new Stage(viewport, game.batch);
         Gdx.input.setInputProcessor(stage);
 
@@ -30,67 +31,98 @@ public class Controller {
         table.left().bottom();
         table.setFillParent(true);
 
-        Image leftBtn = new Image(MarioBros.manager.get("playscreen/left.png", Texture.class));
-        leftBtn.setSize(38, 30);
-        leftBtn.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                leftPressed = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                leftPressed = false;
-            }
-        });
-
-        Image rightBtn = new Image(MarioBros.manager.get("playscreen/right.png", Texture.class));
-        rightBtn.setSize(38, 30);
-        rightBtn.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                rightPressed = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                rightPressed = false;
-            }
-        });
-
-        Image upBtn = new Image(MarioBros.manager.get("playscreen/up.png", Texture.class));
-        upBtn.setSize(35, 35);
-        upBtn.addListener(new InputListener(){
+        Image upImg = new Image(new Texture("playscreen/up.png"));
+        upImg.setSize(35, 35);
+        upImg.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 upPressed = true;
                 return true;
+                //return super.touchDown(event, x, y, pointer, button);
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 upPressed = false;
+                //super.touchUp(event, x, y, pointer, button);
+            }
+        });
+
+        Image leftImg = new Image(new Texture("playscreen/left.png"));
+        leftImg.setSize(38,30);
+        leftImg.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                leftPressed = true;
+                return true;
+                //return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                leftPressed = false;
+                //super.touchUp(event, x, y, pointer, button);
+            }
+        });
+
+        Image rightImg = new Image(new Texture("playscreen/right.png"));
+        rightImg.setSize(38,30);
+        rightImg.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                rightPressed = true;
+                return true;
+                //return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                rightPressed = false;
+                //super.touchUp(event, x, y, pointer, button);
+            }
+        });
+
+        Image downImg = new Image(new Texture("playscreen/down.png"));
+        downImg.setSize(35,35);
+        downImg.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                downPressed = true;
+                return true;
+                //return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                downPressed = false;
+                //super.touchUp(event, x, y, pointer, button);
             }
         });
 
         table.padBottom(10);
         table.padLeft(10);
-        table.add(leftBtn).size(leftBtn.getWidth(), leftBtn.getHeight());
+        table.add(leftImg).size(leftImg.getWidth(), leftImg.getHeight());
         table.add();
-        table.add(rightBtn).size(rightBtn.getWidth(), rightBtn.getHeight());
+        table.add(rightImg).size(rightImg.getWidth(), rightImg.getHeight());
+        //table.row().pad(5,5,5,5);
 
         Table table1 = new Table();
         table1.right().bottom();
         table1.setFillParent(true);
-        table1.padBottom(30);
-        table1.padRight(30);
+        table1.padRight(20);
+        table1.padBottom(20);
+        table1.add(upImg).size(upImg.getWidth(), upImg.getHeight());
+        //table1.add();
+        table1.add(downImg).size(downImg.getWidth(), downImg.getHeight());
 
-        table1.add(upBtn).size(upBtn.getWidth(),upBtn.getHeight());
+        //table.row().padTop(5);
+        //table.add();
 
-        stage.addActor(table1);
+
+
         stage.addActor(table);
+        stage.addActor(table1);
+
     }
 
     public void draw(){
@@ -111,5 +143,9 @@ public class Controller {
 
     public void resize(int width, int height){
         viewport.update(width, height);
+    }
+
+    public boolean isDownPressed() {
+        return downPressed;
     }
 }

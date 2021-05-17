@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.phuocdai.mariobros.Screens.PlayScreen;
 
@@ -26,8 +25,13 @@ public class MarioBros extends Game {
 	public static final short ENEMY_HEAD_BIT = 128;
 	public static final short ITEM_BIT = 256;
 	public static final short MARIO_HEAD_BIT = 512;
+	public static final short FIREBALL_BIT = 1024;
+	public static final short FINISH = 2048;
 
-	public SpriteBatch batch;
+	public static SpriteBatch batch;
+
+
+
 
 	/* WARNING Using AssetManager in a static way can cause issues, especially on Android.
 	Instead you may want to pass around Assetmanager to those the classes that need it.
@@ -38,6 +42,10 @@ public class MarioBros extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		manager = new AssetManager();
+
+
+
+
 		manager.load("audio/music/mario_music.ogg", Music.class);
 		manager.load("audio/sounds/coin.wav", Sound.class);
 		manager.load("audio/sounds/bump.wav", Sound.class);
@@ -47,15 +55,8 @@ public class MarioBros extends Game {
 		manager.load("audio/sounds/powerdown.wav", Sound.class);
 		manager.load("audio/sounds/stomp.wav", Sound.class);
 		manager.load("audio/sounds/mariodie.wav", Sound.class);
-		manager.load("gui/options.png", Texture.class);
-		manager.load("gui/play.png",Texture.class);
-		manager.load("gui/exit.png", Texture.class);
-		manager.load("gui/options_click.png", Texture.class);
-		manager.load("gui/play_click.png", Texture.class);
-		manager.load("gui/exit_click.png", Texture.class);
-		manager.load("playscreen/up.png", Texture.class);
-		manager.load("playscreen/left.png", Texture.class);
-		manager.load("playscreen/right.png", Texture.class);
+		manager.load("audio/sounds/finish.mp3", Sound.class);
+
 		manager.finishLoading();
 
 		setScreen(new PlayScreen(this));
@@ -71,6 +72,7 @@ public class MarioBros extends Game {
 
 	@Override
 	public void render () {
+
 		super.render();
 	}
 }

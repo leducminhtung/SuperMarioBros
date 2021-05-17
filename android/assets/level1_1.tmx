@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="295">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="319">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <layer id="1" name="Background Color" width="240" height="13">
   <data encoding="base64" compression="zlib">
@@ -66,7 +66,6 @@
   <object id="19" x="1552" y="160" width="48" height="16"/>
   <object id="20" x="1552" y="144" width="32" height="16"/>
   <object id="21" x="1552" y="128" width="16" height="16"/>
-  <object id="116" x="3456" y="176" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="5" name="Bricks">
   <object id="177" x="1168" y="128" width="16" height="16"/>
@@ -182,5 +181,13 @@
   <object id="288" x="1328" y="112" width="16" height="16"/>
   <object id="289" x="1696" y="112" width="16" height="16"/>
   <object id="290" x="2608" y="176" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="12" name="MileStones">
+  <object id="317" x="3462" y="32" width="3" height="144.333"/>
+  <object id="318" x="3456" y="176" width="16" height="16">
+   <properties>
+    <property name="Finish" value=""/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

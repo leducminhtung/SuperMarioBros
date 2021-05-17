@@ -12,9 +12,7 @@ import com.phuocdai.mariobros.MarioBros;
 import com.phuocdai.mariobros.Screens.PlayScreen;
 import com.phuocdai.mariobros.Sprites.Mario;
 
-import org.graalvm.compiler.phases.common.NodeCounterPhase;
-
-public class Turtle extends Enemy{
+public class Turtle extends Enemy {
     public static final int KICK_LEFT = -2;
     public static final int KICK_RIGHT = 2;
     public enum State {WALKING, MOVING_SHELL, STANDING_SHELL}

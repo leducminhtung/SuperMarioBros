@@ -1,15 +1,19 @@
 package com.phuocdai.mariobros.Tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.phuocdai.mariobros.MarioBros;
 import com.phuocdai.mariobros.Sprites.Enemies.Enemy;
 import com.phuocdai.mariobros.Sprites.Items.Item;
 import com.phuocdai.mariobros.Sprites.Mario;
+import com.phuocdai.mariobros.Sprites.Other.FireBall;
 import com.phuocdai.mariobros.Sprites.TileObjects.InteractiveTileObject;
-import com.phuocdai.mariobros.MarioBros;
+import com.phuocdai.mariobros.Sprites.TileObjects.MileStones;
+
 
 public class WorldContactListener implements ContactListener {
     @Override
@@ -21,7 +25,6 @@ public class WorldContactListener implements ContactListener {
 
         switch (cDef){
             case MarioBros.MARIO_HEAD_BIT | MarioBros.BRICK_BIT:
-
             case MarioBros.MARIO_HEAD_BIT | MarioBros.COIN_BIT:
                 if(fixA.getFilterData().categoryBits == MarioBros.MARIO_HEAD_BIT)
                     ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Mario) fixA.getUserData());
@@ -61,6 +64,20 @@ public class WorldContactListener implements ContactListener {
                     ((Item)fixA.getUserData()).use((Mario) fixB.getUserData());
                 else
                     ((Item)fixB.getUserData()).use((Mario) fixA.getUserData());
+                break;
+            case MarioBros.FIREBALL_BIT | MarioBros.OBJECT_BIT:
+                if(fixA.getFilterData().categoryBits == MarioBros.FIREBALL_BIT)
+                    ((FireBall)fixA.getUserData()).setToDestroy();
+                else
+                    ((FireBall)fixB.getUserData()).setToDestroy();
+                break;
+            case MarioBros.MARIO_BIT | MarioBros.FINISH :
+                if(fixA.getFilterData().categoryBits == MarioBros.MARIO_BIT) {
+                    ((InteractiveTileObject)fixB.getUserData()).marioTouchMileStones((Mario) fixA.getUserData());
+                }
+                else{
+                    ((InteractiveTileObject)fixA.getUserData()).marioTouchMileStones((Mario) fixB.getUserData());
+                    }
                 break;
         }
     }

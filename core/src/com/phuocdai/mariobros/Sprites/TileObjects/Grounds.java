@@ -14,6 +14,11 @@ public class Grounds extends InteractiveTileObject {
     }
 
     @Override
+    public void marioTouchMileStones(Mario mario) {
+
+    }
+
+    @Override
     public void onHeadHit(Mario mario) {
 
     }
