@@ -4,8 +4,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.phuocdai.mariobros.Screens.PlayScreen;
+import com.phuocdai.mariobros.Screens.SplashScreen;
 
 public class MarioBros extends Game {
 	//Virtual Screen size and Box2D Scale(Pixels Per Meter)
@@ -38,10 +40,12 @@ public class MarioBros extends Game {
 	We will use it in the static context to save time for now. */
 	public static AssetManager manager;
 
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		manager = new AssetManager();
+
 
 
 
@@ -56,10 +60,24 @@ public class MarioBros extends Game {
 		manager.load("audio/sounds/stomp.wav", Sound.class);
 		manager.load("audio/sounds/mariodie.wav", Sound.class);
 		manager.load("audio/sounds/finish.mp3", Sound.class);
+		manager.load("gui/play.png", Texture.class);
+		manager.load("gui/options.png", Texture.class);
+		manager.load("gui/exit.png", Texture.class);
+		manager.load("gui/Screen.png", Texture.class);
+		manager.load("gui/tagLv1.png",Texture.class);
+		manager.load("gui/tagLv2.png",Texture.class);
+		manager.load("gui/tagLv3.png",Texture.class);
+		manager.load("gui/tagLv4.png",Texture.class);
+		manager.load("gui/SelectLV.png",Texture.class);
+		manager.load("playscreen/stop.png",Texture.class);
+		manager.load("playscreen/resume.png",Texture.class);
+		manager.load("playscreen/quit.png",Texture.class);
+		manager.load("items.png",Texture.class);
+
 
 		manager.finishLoading();
 
-		setScreen(new PlayScreen(this));
+		setScreen(new SplashScreen(this));
 	}
 
 

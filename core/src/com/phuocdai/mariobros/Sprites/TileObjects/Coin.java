@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.phuocdai.mariobros.MarioBros;
 import com.phuocdai.mariobros.Scenes.Hud;
 import com.phuocdai.mariobros.Screens.PlayScreen;
+import com.phuocdai.mariobros.Sprites.Items.Flowers;
 import com.phuocdai.mariobros.Sprites.Items.ItemDef;
 import com.phuocdai.mariobros.Sprites.Items.Mushroom;
 import com.phuocdai.mariobros.Sprites.Mario;
@@ -34,8 +35,10 @@ public class Coin extends InteractiveTileObject {
             MarioBros.manager.get("audio/sounds/bump.wav", Sound.class).play();
         else {
             if(object.getProperties().containsKey("mushroom")) {
-                screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y + 16 / MarioBros.PPM),
-                        Mushroom.class));
+                if (mario.isBig())
+                    screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y + 16 / MarioBros.PPM), Flowers.class));
+                else
+                    screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y + 16 / MarioBros.PPM), Mushroom.class));
                 MarioBros.manager.get("audio/sounds/powerup_spawn.wav", Sound.class).play();
             }
             else

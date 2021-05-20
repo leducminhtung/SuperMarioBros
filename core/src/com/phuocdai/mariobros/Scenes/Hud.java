@@ -11,6 +11,10 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.phuocdai.mariobros.MarioBros;
+import com.phuocdai.mariobros.Screens.LevelSelect;
+import com.phuocdai.mariobros.Screens.LevelSelectScreen;
+import com.phuocdai.mariobros.Screens.PlayScreen;
+
 public class Hud implements Disposable{
 
     //Scene2D.ui Stage and its own Viewport for HUD
@@ -30,8 +34,11 @@ public class Hud implements Disposable{
     private Label levelLabel;
     private Label worldLabel;
     private Label marioLabel;
+    private PlayScreen playScreen;
+    private LevelSelect levelSelect;
+    private LevelSelectScreen selectScreen;
 
-    public Hud(SpriteBatch sb){
+    public Hud(SpriteBatch sb, LevelSelect select){
         //define our tracking variables
         worldTimer = 300;
         timeCount = 0;
@@ -54,7 +61,13 @@ public class Hud implements Disposable{
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreLabel =new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+
+        levelLabel = new Label(select.levelText, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+
+
+
         worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         marioLabel = new Label("MARIO", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 

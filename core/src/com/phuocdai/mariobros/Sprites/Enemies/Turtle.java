@@ -1,5 +1,6 @@
 package com.phuocdai.mariobros.Sprites.Enemies;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.phuocdai.mariobros.MarioBros;
+import com.phuocdai.mariobros.Scenes.Hud;
 import com.phuocdai.mariobros.Screens.PlayScreen;
 import com.phuocdai.mariobros.Sprites.Mario;
 
@@ -129,6 +131,8 @@ public class Turtle extends Enemy {
             currentState = State.STANDING_SHELL;
             velocity.x = 0;
         }
+        MarioBros.manager.get("audio/sounds/coin.wav", Sound.class).play();
+        Hud.addScore(100);
     }
 
     @Override

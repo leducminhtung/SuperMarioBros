@@ -7,7 +7,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -20,7 +19,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.phuocdai.mariobros.MarioBros;
 import com.phuocdai.mariobros.Scenes.Hud;
+import com.phuocdai.mariobros.Screens.Gui.Controller;
 import com.phuocdai.mariobros.Sprites.Enemies.Enemy;
+import com.phuocdai.mariobros.Sprites.Items.Flowers;
 import com.phuocdai.mariobros.Sprites.Items.Item;
 import com.phuocdai.mariobros.Sprites.Items.ItemDef;
 import com.phuocdai.mariobros.Sprites.Items.Mushroom;
@@ -36,6 +37,7 @@ public class PlayScreen implements Screen{
     //Reference to our Game, used to set Screens
     private MarioBros game;
     private TextureAtlas atlas;
+    private TextureAtlas atlasFire;
     public static boolean alreadyDestroyed = false;
 
     //basic playscreen variables
@@ -44,7 +46,6 @@ public class PlayScreen implements Screen{
     private Hud hud;
 
     //Tiled map variables
-    private TmxMapLoader maploader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
@@ -62,13 +63,18 @@ public class PlayScreen implements Screen{
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
 
+
+
     Controller controller;
 
 
-    public PlayScreen(MarioBros game){
+    public PlayScreen(MarioBros game, LevelSelect select){
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
+        atlasFire = new TextureAtlas("mariowhite.pack");
 
         this.game = game;
+        this.map = select.map;
+
         //create cam used to follow mario through cam world
         gamecam = new OrthographicCamera();
 
@@ -76,12 +82,10 @@ public class PlayScreen implements Screen{
         gamePort = new FitViewport(MarioBros.V_WIDTH / MarioBros.PPM, MarioBros.V_HEIGHT / MarioBros.PPM, gamecam);
 
         //create our game HUD for scores/timers/level info
-        hud = new Hud(game.batch);
+        hud = new Hud(game.batch, select);
 
         //Load our map and setup our map renderer
-        maploader = new TmxMapLoader();
-        map = maploader.load("level1_1.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1  / MarioBros.PPM);
+        renderer = new OrthogonalTiledMapRenderer(select.map, 1  / MarioBros.PPM);
 
         //initially set our gamcam to be centered correctly at the start of of map
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
@@ -120,12 +124,19 @@ public class PlayScreen implements Screen{
             if(idef.type == Mushroom.class){
                 items.add(new Mushroom(this, idef.position.x, idef.position.y));
             }
+            else if (idef.type == Flowers.class){
+                items.add(new Flowers(this, idef.position.x, idef.position.y));
+            }
         }
     }
 
 
     public TextureAtlas getAtlas(){
         return atlas;
+    }
+
+    public TextureAtlas getAtlasFire(){
+        return atlasFire;
     }
 
     @Override
@@ -135,8 +146,12 @@ public class PlayScreen implements Screen{
     }
 
     public void handleInput(float dt){
+//        if (Gdx.app.getType() == Application.ApplicationType.Android){
+//            if (controller.isOptionPressed())
+//                game.setScreen(new OptionsInGameScreen(game));
+//        }
         //control our player using immediate impulses
-        if(player.currentState != Mario.State.FINISH) {
+        if(!player.isFinish() && !player.isFinished()) {
             if (player.currentState != Mario.State.DEAD) {
                 if (Gdx.app.getType() == Application.ApplicationType.Android) {
                     if (controller.isUpPressed())
@@ -147,6 +162,7 @@ public class PlayScreen implements Screen{
                         player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
                     if (controller.isDownPressed())
                         player.fire();
+
                 } else {
                     if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
                         player.jump();
