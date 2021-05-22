@@ -24,7 +24,7 @@ import com.phuocdai.mariobros.Sprites.Enemies.*;
 
 public class Mario extends Sprite {
 
-    public enum State { FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD, FINISH, AFTER_FINISH};
+    public enum State { FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD, FINISH, AFTER_FINISH, CHANGING }
     public State currentState;
     public State previousState;
 
@@ -55,12 +55,15 @@ public class Mario extends Sprite {
 
     private Animation growMario;
     private Animation growFireMario;
+    private Animation changeMario;
+    private Animation changeBigMario;
 
     private float stateTimer;
     private boolean runningRight;
     private boolean marioIsBig;
     private boolean marioIsFire;
     private boolean runGrowAnimation;
+    private boolean runChangeAnimation;
     private boolean timeToDefineBigMario;
     private boolean timeToRedefineMario;
     private boolean marioIsDead;
@@ -111,6 +114,21 @@ public class Mario extends Sprite {
         growFireMario = new Animation(0.2f, frames);
 
         frames.clear();
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16));
+        frames.add(new TextureRegion(screen.getAtlasFire().findRegion("little_mario"), 0, 0, 16, 16));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16));
+        frames.add(new TextureRegion(screen.getAtlasFire().findRegion("little_mario"), 0, 0, 16, 16));
+        changeMario = new Animation(0.2f, frames);
+
+        frames.clear();
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32));
+        frames.add(new TextureRegion(screen.getAtlasFire().findRegion("big_mario"), 0, 0, 16, 32));
+        frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32));
+        frames.add(new TextureRegion(screen.getAtlasFire().findRegion("big_mario"), 0, 0, 16, 32));
+        changeBigMario = new Animation(0.2f, frames);
+
+        frames.clear();
+
 
         for(int i = 1; i < 4; i++)
             frames.add(new TextureRegion(screen.getAtlasFire().findRegion("big_mario"), i * 16, 0, 16, 32));
@@ -210,9 +228,13 @@ public class Mario extends Sprite {
                 break;
             case GROWING:
                 region = (TextureRegion) (marioIsFire ? growFireMario.getKeyFrame(stateTimer) : growMario.getKeyFrame(stateTimer));
-                if(growMario.isAnimationFinished(stateTimer) || growFireMario.isAnimationFinished(stateTimer)) {
+                if(growMario.isAnimationFinished(stateTimer) || growFireMario.isAnimationFinished(stateTimer))
                     runGrowAnimation = false;
-                }
+                break;
+            case CHANGING:
+                region = (TextureRegion) (marioIsBig ? changeBigMario.getKeyFrame(stateTimer) : changeMario.getKeyFrame(stateTimer));
+                if(changeMario.isAnimationFinished(stateTimer) || changeBigMario.isAnimationFinished(stateTimer))
+                    runChangeAnimation = false;
                 break;
             case JUMPING:
                 region = marioIsFire ? (marioIsBig ? bigMarioFireJump : marioFireJump) : (marioIsBig ? bigMarioJump : marioJump);
@@ -255,6 +277,8 @@ public class Mario extends Sprite {
             return State.AFTER_FINISH;
         else if(marioIsFinish)
             return State.FINISH;
+        else if(runChangeAnimation)
+            return State.CHANGING;
         else if(runGrowAnimation)
             return State.GROWING;
         else if((b2body.getLinearVelocity().y > 0 && currentState == State.JUMPING) || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
@@ -280,8 +304,14 @@ public class Mario extends Sprite {
         }
     }
 
-    public void setMarioIsFire(){
-        marioIsFire = true;
+    public void change(){
+        if( !isFire() ) {
+            runChangeAnimation = true;
+            marioIsFire = true;
+            timeToDefineBigMario = true;
+            setBounds(getX(), getY(), getWidth(), getHeight());
+            MarioBros.manager.get("audio/sounds/powerup.wav", Sound.class).play();
+        }
     }
 
     public void die() {
@@ -334,6 +364,10 @@ public class Mario extends Sprite {
 
     public boolean isBig(){
         return marioIsBig;
+    }
+
+    public boolean isFire(){
+        return marioIsFire;
     }
 
     public void jump(){

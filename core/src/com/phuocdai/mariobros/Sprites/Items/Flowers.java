@@ -43,7 +43,7 @@ public class Flowers extends Item {
     @Override
     public void use(Mario mario) {
         destroy();
-        mario.setMarioIsFire();
+        mario.change();
     }
 
     @Override
