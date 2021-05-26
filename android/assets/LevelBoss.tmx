@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="213" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+ <tileset firstgid="1" source="../../Games2D/MarioBros/android/assets/tileset_gutter.tsx"/>
+ <layer id="2" name="Background" width="213" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztwwENAAAMw6DKmn9lF3JIWDVVVVVVVVVVVVVVffQATV1d1w==
+  </data>
+ </layer>
+ <layer id="1" name="Graphics Layer" width="213" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztWMtOwzAQdH3gBOWcI5E49FD4B/5fghsPFb4BbkAlhI1qdbWy9xUnaYtHGjVNNuvJeqdx7VxDQ0NtnAOOiUfv3FPgsz+MPHON2/TPO64mz5VxrIvAZeCl7fY/SHR+hmtfgd9+H2+pUa08TX/Tz+W5E+aG+uO7aQ1ofVdBnZp4zT1T5Gn6beOeqn6pp6D++H6KvHH74wY9Oua6B6yFlK9D+fF3aZ7a2pIO6txc6HfkIPUURPLRrWueavgf6N24nlpnOMV+RcPxQtKLU8Cio3fjewqu++D6z/K+6grHp4a3Bc1ThrQXp4BWB/aT1VPcPjlc98H1n9RTUu9o1+z3oTcfRurPIev5OA/XDHsUbwVXA68gBWmcpheH/p+SPIOmtjk/WT3F7ZMvCZbwyvQ6dx2i1Dfv4dwHOq/JS41h1S+dh5KntPpzNbDkqQFtL1Ko0T8aHSU/WTwl2SfH6z5q/2+ze9Yf5pnT9Ri/YWJLfZPOw/u5cbkxOP3Jezn9mnnAnkrftfpxbaT1r4k4pqUXS7kiavSPZi5qeSpqkeyT43Uftf+3Ap9niKW4laPBeSqNNQQwV9KV05+Li8Tz8OJpwhg4d1wtSroTpPWvgZTX2os51OwfTgel3fr7GJHbJ8f6F0fIufVvPU0YM3etNLXU1HPO+h9aP2D+AhrZ8e8=
+  </data>
+ </layer>
+</map>
