@@ -20,10 +20,8 @@ import com.phuocdai.mariobros.Sprites.Mario;
 public class LevelSelectGUI {
     private Viewport viewport;
     private Stage stage;
-    private boolean lv1, lv2, lv3, lv4;
+    private int level;
     private OrthographicCamera cam;
-
-    private Label contentLabel;
 
     private Image backGr = new Image((MarioBros.manager.get("gui/SelectLV.png", Texture.class)));
     //private Image star = new Image((MarioBros.manager.get("gui/star_lv.png",Texture.class)));
@@ -51,7 +49,7 @@ public class LevelSelectGUI {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                lv1 = true;
+                level = 1;
             }
         });
 
@@ -64,7 +62,7 @@ public class LevelSelectGUI {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                lv2 = true;
+                level = 2;
             }
         });
 
@@ -77,7 +75,7 @@ public class LevelSelectGUI {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                lv3 = true;
+                level = 3;
             }
         });
 
@@ -90,7 +88,7 @@ public class LevelSelectGUI {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                lv4 = true;
+                level = 4;
             }
         });
 
@@ -128,14 +126,9 @@ public class LevelSelectGUI {
     }
     public void draw(){stage.draw();}
 
-    public boolean isSelectLevel1(){
-        return lv1;
+    public int getLevel() {
+        return level;
     }
-    public boolean isSelectLevel2(){
-        return lv2;
-    }
-    public boolean isSelectLevel3(){return lv3;}
-    public boolean isSelectLevel4(){return lv4;}
 
     public void resize(int width, int height){
         viewport.update(width, height);

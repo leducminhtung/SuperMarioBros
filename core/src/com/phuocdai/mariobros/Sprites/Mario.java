@@ -305,12 +305,21 @@ public class Mario extends Sprite {
     }
 
     public void change(){
-        if( !isFire() ) {
-            runChangeAnimation = true;
-            marioIsFire = true;
-            timeToDefineBigMario = true;
-            setBounds(getX(), getY(), getWidth(), getHeight());
-            MarioBros.manager.get("audio/sounds/powerup.wav", Sound.class).play();
+        if( !isFire()) {
+            if (!isBig()) {
+                runChangeAnimation = true;
+                marioIsFire = true;
+                timeToRedefineMario = true;
+                setBounds(getX(), getY(), getWidth(), getHeight());
+                MarioBros.manager.get("audio/sounds/powerup.wav", Sound.class).play();
+            }
+            else {
+                runChangeAnimation = true;
+                marioIsFire = true;
+                timeToDefineBigMario = true;
+                setBounds(getX(), getY(), getWidth(), getHeight());
+                MarioBros.manager.get("audio/sounds/powerup.wav", Sound.class).play();
+            }
         }
     }
 
@@ -344,9 +353,17 @@ public class Mario extends Sprite {
     }
 
     public void afterFinish() {
+        if (isFinish()) {
             finished = true;
             currentState = State.AFTER_FINISH;
             b2body.applyLinearImpulse(new Vector2(2f, -1), b2body.getWorldCenter(), true);
+        }
+        else {
+            marioIsFinish= true;
+            finished = true;
+            currentState = State.AFTER_FINISH;
+            b2body.applyLinearImpulse(new Vector2(2f, -1), b2body.getWorldCenter(), true);
+        }
 
     }
 
@@ -425,8 +442,6 @@ public class Mario extends Sprite {
         fdef.isSensor = true;
 
         b2body.createFixture(fdef).setUserData(this);
-
-
 
         timeToRedefineMario = false;
 

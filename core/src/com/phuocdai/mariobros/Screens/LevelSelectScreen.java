@@ -30,18 +30,32 @@ public class LevelSelectScreen implements Screen {
     }
 
     public void handleInput(float dt){
-        if(selectGUI.isSelectLevel1())
-            game.setScreen((new PlayScreen(game, new LevelSelect(1))));
-
-        else
-            if(selectGUI.isSelectLevel2())
+        switch (selectGUI.getLevel()){
+            case 1:
+                game.setScreen((new PlayScreen(game, new LevelSelect(1))));
+                break;
+            case 2:
                 game.setScreen((new PlayScreen(game, new LevelSelect(2))));
-            else
-                if(selectGUI.isSelectLevel3())
-                    game.setScreen((new PlayScreen(game, new LevelSelect(3))));
-                else
-                    if(selectGUI.isSelectLevel4())
-                        game.setScreen(new PlayScreen(game,new LevelSelect(4)));
+                break;
+            case 3:
+                game.setScreen((new PlayScreen(game, new LevelSelect(3))));
+                break;
+            case 4:
+                game.setScreen((new PlayScreen(game, new LevelSelect(4))));
+                break;
+        }
+
+//        if(selectGUI.isSelectLevel1())
+//            game.setScreen((new PlayScreen(game, new LevelSelect(1))));
+//        else
+//            if(selectGUI.isSelectLevel2())
+//                game.setScreen((new PlayScreen(game, new LevelSelect(2))));
+//            else
+//                if(selectGUI.isSelectLevel3())
+//                    game.setScreen((new PlayScreen(game, new LevelSelect(3))));
+//                else
+//                    if(selectGUI.isSelectLevel4())
+//                        game.setScreen(new PlayScreen(game,new LevelSelect(4)));
     }
 
     public void update(float dt){

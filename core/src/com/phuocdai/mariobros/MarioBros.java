@@ -74,7 +74,6 @@ public class MarioBros extends Game {
 		manager.load("playscreen/quit.png",Texture.class);
 		manager.load("items.png",Texture.class);
 
-
 		manager.finishLoading();
 
 		setScreen(new SplashScreen(this));

@@ -1,9 +1,16 @@
 package com.phuocdai.mariobros.Sprites.TileObjects;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.phuocdai.mariobros.MarioBros;
 import com.phuocdai.mariobros.Scenes.Hud;
 import com.phuocdai.mariobros.Screens.PlayScreen;
@@ -47,4 +54,5 @@ public class Coin extends InteractiveTileObject {
             Hud.addScore(100);
         }
     }
+
 }

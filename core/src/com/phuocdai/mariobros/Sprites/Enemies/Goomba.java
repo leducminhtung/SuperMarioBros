@@ -68,7 +68,8 @@ public class Goomba extends Enemy
                 MarioBros.BRICK_BIT |
                 MarioBros.ENEMY_BIT |
                 MarioBros.OBJECT_BIT |
-                MarioBros.MARIO_BIT;
+                MarioBros.MARIO_BIT |
+                MarioBros.FIREBALL_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -108,5 +109,10 @@ public class Goomba extends Enemy
             setToDestroy = true;
         else
             reverseVelocity(true, false);
+    }
+
+    @Override
+    public void hitByFireBall() {
+        setToDestroy = true;
     }
 }

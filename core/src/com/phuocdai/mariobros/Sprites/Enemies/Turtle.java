@@ -57,7 +57,8 @@ public class Turtle extends Enemy {
                 MarioBros.BRICK_BIT |
                 MarioBros.ENEMY_BIT |
                 MarioBros.OBJECT_BIT |
-                MarioBros.MARIO_BIT;
+                MarioBros.MARIO_BIT |
+                MarioBros.FIREBALL_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -143,5 +144,10 @@ public class Turtle extends Enemy {
     public void kick(int direction){
         velocity.x = direction;
         currentState = State.MOVING_SHELL;
+    }
+
+    @Override
+    public void hitByFireBall() {
+        setToDestroy = true;
     }
 }

@@ -17,7 +17,7 @@ import com.phuocdai.mariobros.Screens.PlayScreen;
 import com.phuocdai.mariobros.Sprites.Mario;
 
 
-public abstract class InteractiveTileObject {
+public abstract class InteractiveTileObject{
     protected World world;
     protected TiledMap map;
     protected Rectangle bounds;

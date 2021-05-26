@@ -26,6 +26,7 @@ import com.phuocdai.mariobros.Sprites.Items.Item;
 import com.phuocdai.mariobros.Sprites.Items.ItemDef;
 import com.phuocdai.mariobros.Sprites.Items.Mushroom;
 import com.phuocdai.mariobros.Sprites.Mario;
+import com.phuocdai.mariobros.Sprites.TileObjects.InteractiveTileObject;
 import com.phuocdai.mariobros.Tools.B2WorldCreator;
 import com.phuocdai.mariobros.Tools.WorldContactListener;
 
@@ -160,17 +161,17 @@ public class PlayScreen implements Screen{
                         player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
                     if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2)
                         player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-                    if (controller.isDownPressed())
+                    if (controller.isDownPressed() && player.isFire())
                         player.fire();
 
                 } else {
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.W))
                         player.jump();
-                    if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
+                    if (Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2)
                         player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-                    if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
+                    if (Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
                         player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.M) && player.isFire())
                         player.fire();
                 }
 
