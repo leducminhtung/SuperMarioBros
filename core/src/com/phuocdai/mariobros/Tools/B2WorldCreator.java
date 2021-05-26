@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.phuocdai.mariobros.MarioBros;
 import com.phuocdai.mariobros.Screens.PlayScreen;
+import com.phuocdai.mariobros.Sprites.Enemies.Boss;
 import com.phuocdai.mariobros.Sprites.Enemies.Enemy;
 import com.phuocdai.mariobros.Sprites.Enemies.Turtle;
 import com.phuocdai.mariobros.Sprites.TileObjects.Brick;
@@ -27,6 +28,7 @@ import com.phuocdai.mariobros.Sprites.TileObjects.Pipes;
 public class B2WorldCreator {
     private Array<Goomba> goombas;
     private Array<Turtle> turtles;
+    private Array<Boss> bosses;
     private TiledMap map;
 
     public B2WorldCreator(PlayScreen screen){
@@ -100,12 +102,19 @@ public class B2WorldCreator {
             body.createFixture(fdef); */
             new MileStones(screen,object);
         }
+        bosses = new Array<Boss>();
+        for(MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            bosses.add(new Boss(screen, rect.getX() / MarioBros.PPM, rect.getY() / MarioBros.PPM));
+        }
+
     }
 
     public Array<Enemy> getEnemies(){
         Array<Enemy> enemies = new Array<Enemy>();
         enemies.addAll(goombas);
         enemies.addAll(turtles);
+        enemies.addAll(bosses);
         return enemies;
     }
 

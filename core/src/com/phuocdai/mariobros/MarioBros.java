@@ -6,7 +6,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.phuocdai.mariobros.Screens.PlayScreen;
 import com.phuocdai.mariobros.Screens.SplashScreen;
 
 public class MarioBros extends Game {
@@ -46,10 +45,6 @@ public class MarioBros extends Game {
 		batch = new SpriteBatch();
 		manager = new AssetManager();
 
-
-
-
-
 		manager.load("audio/music/mario_music.ogg", Music.class);
 		manager.load("audio/sounds/coin.wav", Sound.class);
 		manager.load("audio/sounds/bump.wav", Sound.class);
@@ -60,6 +55,11 @@ public class MarioBros extends Game {
 		manager.load("audio/sounds/stomp.wav", Sound.class);
 		manager.load("audio/sounds/mariodie.wav", Sound.class);
 		manager.load("audio/sounds/finish.mp3", Sound.class);
+		manager.load("audio/sounds/1-up.wav", Sound.class);
+		manager.load("audio/sounds/world_clear.wav", Sound.class);
+		manager.load("audio/sounds/vine.wav", Sound.class);
+		manager.load("audio/sounds/fireball.wav", Sound.class);
+		manager.load("audio/sounds/warning.wav", Sound.class);
 		manager.load("gui/play.png", Texture.class);
 		manager.load("gui/options.png", Texture.class);
 		manager.load("gui/exit.png", Texture.class);
@@ -72,6 +72,7 @@ public class MarioBros extends Game {
 		manager.load("playscreen/stop.png",Texture.class);
 		manager.load("playscreen/resume.png",Texture.class);
 		manager.load("playscreen/quit.png",Texture.class);
+		manager.load("boss.png", Texture.class);
 		manager.load("items.png",Texture.class);
 
 		manager.finishLoading();

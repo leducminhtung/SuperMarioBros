@@ -1,15 +1,11 @@
 package com.phuocdai.mariobros.Sprites.TileObjects;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
-import com.badlogic.gdx.math.Vector2;
 import com.phuocdai.mariobros.MarioBros;
 
 import com.phuocdai.mariobros.Scenes.Hud;
 import com.phuocdai.mariobros.Screens.PlayScreen;
-import com.phuocdai.mariobros.Sprites.Items.ItemDef;
-import com.phuocdai.mariobros.Sprites.Items.Mushroom;
 import com.phuocdai.mariobros.Sprites.Mario;
 
 public class MileStones extends InteractiveTileObject{

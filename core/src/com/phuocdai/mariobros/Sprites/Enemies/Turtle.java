@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
@@ -17,13 +19,14 @@ import com.phuocdai.mariobros.Sprites.Mario;
 public class Turtle extends Enemy {
     public static final int KICK_LEFT = -2;
     public static final int KICK_RIGHT = 2;
-    public enum State {WALKING, MOVING_SHELL, STANDING_SHELL}
+    public enum State {WALKING, MOVING_SHELL, STANDING_SHELL, DEAD_SHELL}
     public State currentState;
     public State previousState;
     private float stateTime;
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
     private TextureRegion shell;
+    private TextureRegion deadShell;
     private boolean setToDestroy;
     private boolean destroyed;
 
@@ -34,6 +37,8 @@ public class Turtle extends Enemy {
         frames.add(new TextureRegion(screen.getAtlas().findRegion("turtle"), 0, 0, 16, 24));
         frames.add(new TextureRegion(screen.getAtlas().findRegion("turtle"), 16, 0, 16, 24));
         shell = new TextureRegion(screen.getAtlas().findRegion("turtle"), 64, 0, 16, 24);
+        deadShell = new TextureRegion(screen.getAtlas().findRegion("turtle"), 64, 0, 16, 24);
+        deadShell.flip(false, true);
         walkAnimation = new Animation(0.2f, frames);
         currentState = previousState = State.WALKING;
 
@@ -86,6 +91,9 @@ public class Turtle extends Enemy {
             case STANDING_SHELL:
                 region = shell;
                 break;
+            case DEAD_SHELL:
+                region = deadShell;
+                break;
             case WALKING:
             default:
                 region = (TextureRegion) walkAnimation.getKeyFrame(stateTime, true);
@@ -108,6 +116,18 @@ public class Turtle extends Enemy {
     @Override
     public void update(float dt) {
         setRegion(getFrame(dt));
+        if(setToDestroy && !destroyed){
+            destroyed = true;
+            currentState = State.DEAD_SHELL;
+            Filter filter = new Filter();
+            filter.maskBits = MarioBros.NOTHING_BIT;
+
+            for (Fixture fixture : b2body.getFixtureList()) {
+                fixture.setFilterData(filter);
+            }
+
+            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getPosition(), true);
+        }
         if(currentState == State.STANDING_SHELL && stateTime > 5){
             currentState = State.WALKING;
             velocity.x = 1;
@@ -122,17 +142,19 @@ public class Turtle extends Enemy {
     public void hitOnHead(Mario mario) {
         if(currentState == State.STANDING_SHELL) {
             if(mario.b2body.getPosition().x > b2body.getPosition().x)
+
                 velocity.x = -2;
             else
                 velocity.x = 2;
             currentState = State.MOVING_SHELL;
+            MarioBros.manager.get("audio/sounds/1-up.wav", Sound.class).play();
             System.out.println("Set to moving shell");
         }
         else {
             currentState = State.STANDING_SHELL;
             velocity.x = 0;
         }
-        MarioBros.manager.get("audio/sounds/coin.wav", Sound.class).play();
+        MarioBros.manager.get("audio/sounds/1-up.wav", Sound.class).play();
         Hud.addScore(100);
     }
 
@@ -149,5 +171,7 @@ public class Turtle extends Enemy {
     @Override
     public void hitByFireBall() {
         setToDestroy = true;
+        MarioBros.manager.get("audio/sounds/fireball.wav", Sound.class).play();
+        Hud.addScore(100);
     }
 }

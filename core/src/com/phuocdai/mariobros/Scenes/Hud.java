@@ -12,8 +12,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.phuocdai.mariobros.MarioBros;
 import com.phuocdai.mariobros.Screens.LevelSelect;
-import com.phuocdai.mariobros.Screens.LevelSelectScreen;
-import com.phuocdai.mariobros.Screens.PlayScreen;
 
 public class Hud implements Disposable{
 
@@ -34,9 +32,6 @@ public class Hud implements Disposable{
     private Label levelLabel;
     private Label worldLabel;
     private Label marioLabel;
-    private PlayScreen playScreen;
-    private LevelSelect levelSelect;
-    private LevelSelectScreen selectScreen;
 
     public Hud(SpriteBatch sb, LevelSelect select){
         //define our tracking variables

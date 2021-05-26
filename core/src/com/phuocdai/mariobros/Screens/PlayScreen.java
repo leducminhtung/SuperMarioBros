@@ -39,6 +39,12 @@ public class PlayScreen implements Screen{
     private MarioBros game;
     private TextureAtlas atlas;
     private TextureAtlas atlasFire;
+    private TextureAtlas atlasBoss;
+
+    public TextureAtlas getAtlasBoss() {
+        return atlasBoss;
+    }
+
     public static boolean alreadyDestroyed = false;
 
     //basic playscreen variables
@@ -72,6 +78,7 @@ public class PlayScreen implements Screen{
     public PlayScreen(MarioBros game, LevelSelect select){
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
         atlasFire = new TextureAtlas("mariowhite.pack");
+        atlasBoss = new TextureAtlas("boss.pack");
 
         this.game = game;
         this.map = select.map;
@@ -103,10 +110,10 @@ public class PlayScreen implements Screen{
 
         world.setContactListener(new WorldContactListener());
 
-        music = MarioBros.manager.get("audio/music/mario_music.ogg", Music.class);
-        music.setLooping(true);
-        music.setVolume(0.3f);
-        music.play();
+//        music = MarioBros.manager.get("audio/music/mario_music.ogg", Music.class);
+//        music.setLooping(true);
+//        music.setVolume(0.3f);
+//        music.play();
 
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
@@ -171,7 +178,7 @@ public class PlayScreen implements Screen{
                         player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
                     if (Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
                         player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
-                    if (Gdx.input.isKeyJustPressed(Input.Keys.M) && player.isFire())
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && player.isFire())
                         player.fire();
                 }
 

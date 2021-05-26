@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.phuocdai.mariobros.MarioBros;
+import com.phuocdai.mariobros.Scenes.Hud;
 import com.phuocdai.mariobros.Screens.PlayScreen;
 import com.phuocdai.mariobros.Sprites.Mario;
 
@@ -100,7 +101,8 @@ public class Goomba extends Enemy
     @Override
     public void hitOnHead(Mario mario) {
         setToDestroy = true;
-        MarioBros.manager.get("audio/sounds/stomp.wav", Sound.class).play();
+        MarioBros.manager.get("audio/sounds/1-up.wav", Sound.class).play();
+        Hud.addScore(100);
     }
 
     @Override
@@ -114,5 +116,7 @@ public class Goomba extends Enemy
     @Override
     public void hitByFireBall() {
         setToDestroy = true;
+        MarioBros.manager.get("audio/sounds/fireball.wav", Sound.class).play();
+        Hud.addScore(100);
     }
 }
